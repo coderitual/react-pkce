@@ -1,7 +1,7 @@
 {
-  "name": "react-pkce",
-  "version": "0.9.9",
-  "description": "React components to authenticate via PKCE",
+  "name": "react-pkce-urlencoded",
+  "version": "0.9.11",
+  "description": "Fork of react pkce which sends data as a urlencoed body",
   "main": "dist/index.js",
   "scripts": {
     "start": "PORT=3001 react-scripts start",
@@ -12,7 +12,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "sample": "webpack-dev-server --port 3001 --config ./sample/webpack.config.js"
   },
-  "author": "Chris Oloff <chris@uber5.com> (http://about.uber5.com/)",
+  "author": "Mike Skowronek <skowronkow@gmail.com>",
   "keywords": [
     "oauth2",
     "authentication",

@@ -1,37 +1,53 @@
-export const fetchToken = ({ clientId, clientSecret, code, verifier, tokenEndpoint, fetch = window.fetch }) => {
+export const fetchToken = ({
+  clientId,
+  clientSecret,
+  code,
+  verifier,
+  tokenEndpoint,
+  fetch = window.fetch,
+}) => {
   const payload = {
     client_id: clientId,
     code,
     grant_type: 'authorization_code',
-    code_verifier: verifier
+    code_verifier: verifier,
   };
   if (clientSecret) {
-    payload.client_secret = clientSecret
+    payload.client_secret = clientSecret;
   }
+
+  var form_data = new FormData();
+
+  for (var key in payload) {
+    form_data.append(key, payload[key]);
+  }
+
   return fetch(tokenEndpoint, {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
     method: 'POST',
-    body: JSON.stringify(payload)
+    body: new URLSearchParams(form_data).toString(),
   })
-    .then(r => {
+    .then((r) => {
       if (!r.ok) {
-        throw new Error(`Token response not ok, status is ${r.status}, check the react-u5auth configuration (wrong provider or token endpoint?)`);
+        throw new Error(
+          `Token response not ok, status is ${r.status}, check the react-u5auth configuration (wrong provider or token endpoint?)`,
+        );
       }
       return r.json();
     })
-    .then(token => {
+    .then((token) => {
       const { expires_in } = token;
       if (expires_in && Number.isFinite(expires_in)) {
         const slackSeconds = 10;
         // add 'expires_at', with the given slack
-        token.expires_at = new Date(new Date().getTime() + expires_in * 1000 - (slackSeconds * 1000));
+        token.expires_at = new Date(new Date().getTime() + expires_in * 1000 - slackSeconds * 1000);
       }
       return token;
     })
-    .catch(err => {
+    .catch((err) => {
       console.error('ERR (fetch)', err);
       throw err;
     });
-}
+};
