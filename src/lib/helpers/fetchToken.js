@@ -11,6 +11,7 @@ export const fetchToken = ({
     code,
     grant_type: 'authorization_code',
     code_verifier: verifier,
+    redirect_uri: window.location,
   };
   if (clientSecret) {
     payload.client_secret = clientSecret;
