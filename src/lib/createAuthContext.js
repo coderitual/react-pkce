@@ -5,6 +5,7 @@ import { fetchToken } from './helpers/fetchToken'
 import { removeCodeFromLocation } from './helpers/removeCodeFromLocation'
 import { getVerifierFromStorage } from './helpers/getVerifierFromStorage'
 import { removeVerifierFromStorage } from './helpers/removeVerifierFromStorage'
+import { isClient } from './helpers/utils'
 
 export default ({
   clientId,
@@ -30,7 +31,7 @@ export default ({
       const { token } = this.context
       const { children } = this.props
 
-      if (!token) {
+      if (!token || !isClient) {
         return busyIndicator
       } else {
         return children
@@ -40,6 +41,9 @@ export default ({
 
   const useToken = () => {
     const { token } = useContext(context)
+    if(isClient) {
+      console.warn(`Trying to useToken() while rendering on the server side.\nMake sure to useToken() only on client side.`)
+    }
     if (!token) {
       console.warn(`Trying to useToken() while not being authenticated.\nMake sure to useToken() only inside of an <Authenticated /> component.`)
     }
@@ -53,7 +57,7 @@ export default ({
       // if we have no token, but code and verifier are present,
       // then we try to swap code for token
       useEffect(() => {
-        if (!token) {
+        if (!token && isClient) {
           const code = getCodeFromLocation({ location: window.location })
           const verifier = getVerifierFromStorage({ clientId, storage })
           if (code && verifier) {
@@ -80,8 +84,16 @@ export default ({
         }
       }
 
+      const isAuthenticated = () => {
+        if(!isClient) {
+          return false;
+        }
+        const code = getCodeFromLocation({ location: window.location })
+        return token && code;
+      }
+
       return (
-        <Provider value={{token, ensureAuthenticated}}>
+        <Provider value={{token, ensureAuthenticated, isAuthenticated}}>
           {children}
         </Provider>
       )

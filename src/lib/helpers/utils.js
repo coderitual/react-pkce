@@ -7,3 +7,5 @@ export const getHashValues = () => {
   const code = splitted[0].substring(6)
   return {code, redirect_url}
 }
+
+export const isClient = typeof window === 'object';
