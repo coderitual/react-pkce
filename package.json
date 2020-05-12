@@ -1,6 +1,6 @@
 {
   "name": "react-pkce-urlencoded",
-  "version": "0.9.15",
+  "version": "0.9.16",
   "description": "Fork of react pkce which sends data as a urlencoed body",
   "main": "dist/index.js",
   "scripts": {
