@@ -50,6 +50,15 @@ export default ({
     return token
   }
 
+  const useAuthenticated = () => {
+    if(!isClient) {
+      return false;
+    }
+    const { token } = useContext(context)
+    const code = getCodeFromLocation({ location: window.location })
+    return token && code;
+  }
+
   return {
     AuthContext: ({children}) => {
       const [token, setToken] = useState(null)
@@ -84,21 +93,14 @@ export default ({
         }
       }
 
-      const isAuthenticated = () => {
-        if(!isClient) {
-          return false;
-        }
-        const code = getCodeFromLocation({ location: window.location })
-        return token && code;
-      }
-
       return (
-        <Provider value={{token, ensureAuthenticated, isAuthenticated}}>
+        <Provider value={{token, ensureAuthenticated}}>
           {children}
         </Provider>
       )
     },
     Authenticated,
-    useToken
+    useToken,
+    useAuthenticated
   }
 }
