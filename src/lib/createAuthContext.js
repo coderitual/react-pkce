@@ -92,11 +92,13 @@ export default ({
               verifier,
               fetch,
             })
-              .then(setToken)
+              .then((val) => {
+                setToken(val);
+                storage.setItem(tokenkey, JSON.stringify(val));
+              })
               .then(() => {
                 removeCodeFromLocation();
                 removeVerifierFromStorage({ clientId, storage });
-                storage.setItem(tokenkey, JSON.stringify(token));
               })
               .catch((e) => {
                 console.error(e);
