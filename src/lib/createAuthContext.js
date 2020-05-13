@@ -71,7 +71,9 @@ export default ({
       useEffect(() => {
         if (isClient) {
           const token = storage.getItem(tokenkey);
-          setToken(token);
+          if (token) {
+            setToken(JSON.parse(token));
+          }
         }
       }, []);
 
@@ -94,7 +96,7 @@ export default ({
               .then(() => {
                 removeCodeFromLocation();
                 removeVerifierFromStorage({ clientId, storage });
-                storage.setItem(tokenkey, token);
+                storage.setItem(tokenkey, JSON.stringify(token));
               })
               .catch((e) => {
                 console.error(e);
