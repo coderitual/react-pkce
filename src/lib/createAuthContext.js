@@ -66,7 +66,7 @@ export default ({
     AuthContext: ({ children }) => {
       const [token, setToken] = useState(null);
 
-      const tokenkey = `at-${clientid}`;
+      const tokenkey = `at-${clientId}`;
 
       useEffect(() => {
         if (isClient) {
