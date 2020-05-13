@@ -59,7 +59,7 @@ export default ({
     }
     const { token } = useContext(context);
     const code = getCodeFromLocation({ location: window.location });
-    return token && code;
+    return token || code;
   };
 
   return {
