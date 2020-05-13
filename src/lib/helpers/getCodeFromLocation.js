@@ -11,4 +11,4 @@ export const getCodeFromLocation = ({ location }) => {
     }
   }
   return null;
-}
+};

@@ -33,7 +33,7 @@ export const fetchToken = ({
     .then((r) => {
       if (!r.ok) {
         throw new Error(
-          `Token response not ok, status is ${r.status}, check the react-u5auth configuration (wrong provider or token endpoint?)`,
+          `Token response not ok, status is ${r.status}, check the react-u5auth configuration (wrong provider or token endpoint?)`
         );
       }
       return r.json();

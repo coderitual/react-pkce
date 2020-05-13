@@ -1,1 +1,1 @@
-export { default as createAuthContext } from './createAuthContext'
+export { default as createAuthContext } from './createAuthContext';

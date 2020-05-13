@@ -1,9 +1,6 @@
-import crypto from 'crypto'
+import crypto from 'crypto';
 function base64URLEncode(str) {
-  return str.toString('base64')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=/g, '');
+  return str.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 }
 
 // var verifier = base64URLEncode(crypto.randomBytes(32));
@@ -13,4 +10,4 @@ function sha256(buffer) {
 }
 // var challenge = base64URLEncode(sha256(verifier));
 
-export {base64URLEncode, sha256}
+export { base64URLEncode, sha256 };

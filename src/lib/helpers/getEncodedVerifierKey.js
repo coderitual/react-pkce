@@ -1,1 +1,1 @@
-export default clientId => 'encodedVerifier-' + encodeURIComponent(clientId)
+export default (clientId) => 'encodedVerifier-' + encodeURIComponent(clientId);
