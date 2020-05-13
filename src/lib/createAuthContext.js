@@ -6,6 +6,7 @@ import { removeCodeFromLocation } from './helpers/removeCodeFromLocation';
 import { getVerifierFromStorage } from './helpers/getVerifierFromStorage';
 import { removeVerifierFromStorage } from './helpers/removeVerifierFromStorage';
 import { isClient } from './helpers/utils';
+import logout from './helpers/logout';
 
 export default ({
   clientId,
@@ -18,6 +19,7 @@ export default ({
   busyIndicator = <>logging in...</>,
 }) => {
   const context = createContext({});
+  const tokenkey = `at-${clientId}`;
   const { Provider } = context;
 
   class Authenticated extends React.Component {
@@ -42,12 +44,12 @@ export default ({
     const { token } = useContext(context);
     if (isClient) {
       console.warn(
-        `Trying to useToken() while rendering on the server side.\nMake sure to useToken() only on client side.`,
+        `Trying to useToken() while rendering on the server side.\nMake sure to useToken() only on client side.`
       );
     }
     if (!token) {
       console.warn(
-        `Trying to useToken() while not being authenticated.\nMake sure to useToken() only inside of an <Authenticated /> component.`,
+        `Trying to useToken() while not being authenticated.\nMake sure to useToken() only inside of an <Authenticated /> component.`
       );
     }
     return token;
@@ -62,11 +64,25 @@ export default ({
     return token || code;
   };
 
+  const useEndSession = () => {
+    const { token } = useContext(context);
+    return () => {
+      if (!token) {
+        return;
+      }
+      const { id_token } = token;
+      logout({
+        provider,
+        id_token,
+        tokenkey,
+        storage,
+      });
+    };
+  };
+
   return {
     AuthContext: ({ children }) => {
       const [token, setToken] = useState(null);
-
-      const tokenkey = `at-${clientId}`;
 
       useEffect(() => {
         if (isClient) {
@@ -120,5 +136,6 @@ export default ({
     Authenticated,
     useToken,
     useAuthenticated,
+    useEndSession,
   };
 };
