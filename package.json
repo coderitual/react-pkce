@@ -1,7 +1,7 @@
 {
   "name": "react-pkce-urlencoded",
-  "version": "0.9.16",
-  "description": "Fork of react pkce which sends data as a urlencoed body",
+  "version": "0.9.17",
+  "description": "Fork of react pkce which sends data as an urlencoed body",
   "main": "dist/index.js",
   "scripts": {
     "start": "PORT=3001 react-scripts start",

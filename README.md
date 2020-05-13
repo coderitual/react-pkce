@@ -1,5 +1,7 @@
 # What is It?
 
+Fork of react pkce which sends data as an urlencoed body. Original description below.
+
 This zero-dependency package enables [React](https://reactjs.org/) applications
 to use an OAuth2 provider for
 authentication. The OAuth2 provider must support the
@@ -14,11 +16,11 @@ When prompted to login, you can signup with email (use link at the bottom of the
 
 # Prerequisites
 
-* The provider url, e.g. `https://login.u5auth.com`
-* OAuth2 client credentials (client id and secret),
+- The provider url, e.g. `https://login.u5auth.com`
+- OAuth2 client credentials (client id and secret),
   where the client is allowed to use the
   [Authorization code grant](https://tools.ietf.org/html/rfc6749#section-4.1).
-* A React application, which is supposed to be secured via OAuth2 (or
+- A React application, which is supposed to be secured via OAuth2 (or
   rather, needs an `access_token` to authenticate e.g. calls to APIs).
 
 # How
@@ -34,22 +36,22 @@ npm i react-pkce
 First, create an auth context (and related things):
 
 ```js
-const clientId = "8cb4904ae5581ecc2b3a1774"
-const clientSecret = "b683283462070edbac15a8fdab751ada0f501ab48a5f06aa20aee3be24eac9cc"
-const provider = "https://authenticate.u5auth.com"
+const clientId = '8cb4904ae5581ecc2b3a1774';
+const clientSecret = 'b683283462070edbac15a8fdab751ada0f501ab48a5f06aa20aee3be24eac9cc';
+const provider = 'https://authenticate.u5auth.com';
 
-const {AuthContext, Authenticated, useToken} = createAuthContext({
+const { AuthContext, Authenticated, useToken } = createAuthContext({
   clientId,
   clientSecret, // optional, only specify if provider requires it
   provider,
-  scopes: [ 'profile', 'otherScope' ]
-})
+  scopes: ['profile', 'otherScope'],
+});
 ```
 
 You probably need those in other files, so you may want to `export` them:
 
 ```js
-export { AuthContext, Authenticated, useToken }
+export { AuthContext, Authenticated, useToken };
 ```
 
 Next, use the `AuthContext` to wrap anything that may require
@@ -58,11 +60,7 @@ Typically, you would wrap the whole app inside of an `AuthContext`:
 
 ```js
 function App() {
-  return (
-    <AuthContext>
-      // ... all my other components, e.g. router, pages, etc.
-    </AuthContext>
-  )
+  return <AuthContext>// ... all my other components, e.g. router, pages, etc.</AuthContext>;
 }
 ```
 
@@ -77,7 +75,7 @@ function ProtectedComponent() {
     <Authenticated>
       <ProtectedComponent />
     </Authenticated>
-  )
+  );
 }
 ```
 
@@ -108,7 +106,6 @@ In addition to the required properties (`clientId` etc), the following propertie
 - `fetch`: HTTP requests to talk to the OAuth2 provider are done using `window.fetch`, unless you specify your own `fetch` function as a property.
 - `storage`: By default, authentication information (the token) is kept in `window.sessionStorage`. If you want to use different storage (e.g. `window.localStorage`), set this property. (TODO: won't work yet, as we don't check expiry of tokens!)
 - `tokenEndpoint`: The default token endpoint is `${provider}/token`. Configure a different token endpoint here, if your OAuth2 provider does not follow this convention.
-
 
 # Example
 
