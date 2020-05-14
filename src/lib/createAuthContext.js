@@ -47,11 +47,6 @@ export default ({
         `Trying to useToken() while rendering on the server side.\nMake sure to useToken() only on client side.`
       );
     }
-    if (!token) {
-      console.warn(
-        `Trying to useToken() while not being authenticated.\nMake sure to useToken() only inside of an <Authenticated /> component.`
-      );
-    }
     return token;
   };
 
