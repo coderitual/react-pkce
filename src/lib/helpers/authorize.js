@@ -19,8 +19,11 @@ export default function authorize({
     redirect_uri: window.location,
     code_challenge: base64URLEncode(sha256(encodedVerifier)),
     code_challenge_method: 'S256',
-    state: redirectUrl,
   };
+
+  if (redirectUrl) {
+    query.state = redirectUrl;
+  }
 
   if (scopes && scopes.length > 0) {
     query.scope = scopes.join(' ');
