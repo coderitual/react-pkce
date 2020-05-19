@@ -3,7 +3,13 @@ import createCodeVerifier from './create-code-verifier';
 import hashed from './hashed';
 import getEncodedVerifierKey from './getEncodedVerifierKey';
 
-export default function authorize({ provider, clientId, scopes, storage = sessionStorage }) {
+export default function authorize({
+  provider,
+  clientId,
+  scopes,
+  redirectUrl,
+  storage = sessionStorage,
+}) {
   const encodedVerifier = base64URLEncode(createCodeVerifier());
   storage.setItem(getEncodedVerifierKey(clientId), encodedVerifier);
 
@@ -13,6 +19,7 @@ export default function authorize({ provider, clientId, scopes, storage = sessio
     redirect_uri: window.location,
     code_challenge: base64URLEncode(sha256(encodedVerifier)),
     code_challenge_method: 'S256',
+    state: redirectUrl,
   };
 
   if (scopes && scopes.length > 0) {

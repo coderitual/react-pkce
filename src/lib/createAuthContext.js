@@ -26,7 +26,7 @@ export default ({
     static contextType = context;
     componentDidMount() {
       const { ensureAuthenticated } = this.context;
-      ensureAuthenticated();
+      ensureAuthenticated(this.props.redirectUrl);
     }
     render() {
       const { token } = this.context;
@@ -104,6 +104,7 @@ export default ({
               fetch,
             })
               .then((val) => {
+                console.debug('We received: ', val);
                 setToken(val);
                 storage.setItem(tokenkey, JSON.stringify(val));
               })
@@ -119,10 +120,10 @@ export default ({
         }
       }, [token]);
 
-      const ensureAuthenticated = () => {
+      const ensureAuthenticated = (redirectUrl) => {
         const code = getCodeFromLocation({ location: window.location });
         if (!token && !code) {
-          authorize({ provider, clientId, scopes });
+          authorize({ provider, clientId, scopes, redirectUrl });
         }
       };
 
