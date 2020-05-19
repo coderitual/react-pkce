@@ -1,4 +1,4 @@
-const getDataFromLocation = (dataKey, { location }) => {
+const getDataFromLocation = (dataKey, location) => {
   const split = location.toString().split('?');
   if (split.length < 2) {
     return null;
@@ -14,9 +14,9 @@ const getDataFromLocation = (dataKey, { location }) => {
 };
 
 export const getCodeFromLocation = ({ location }) => {
-  return getDataFromLocation('code');
+  return getDataFromLocation('code', location);
 };
 
 export const getStateFromLocation = ({ location }) => {
-  return getDataFromLocation('state');
+  return getDataFromLocation('state', location);
 };
