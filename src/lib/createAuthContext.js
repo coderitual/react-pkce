@@ -112,13 +112,6 @@ export default ({
               .then(() => {
                 removeCodeFromLocation();
                 removeVerifierFromStorage({ clientId, storage });
-                const returnUrl = getStateFromLocation({ location: window.location });
-                console.log('Return url:', returnUrl);
-                debugger;
-                if (returnUrl) {
-                  console.log('Redirecting back to requested URL');
-                  window.location.replace(returnUrl);
-                }
               })
               .catch((e) => {
                 console.error(e);
@@ -126,7 +119,7 @@ export default ({
               });
           }
         }
-      }, []);
+      }, [token]);
 
       const ensureAuthenticated = (redirectUrl) => {
         const code = getCodeFromLocation({ location: window.location });
