@@ -93,7 +93,6 @@ export default ({
       useEffect(() => {
         if (!token && isClient) {
           const code = getCodeFromLocation({ location: window.location });
-          const returnUrl = getStateFromLocation({ location: window.location });
 
           const verifier = getVerifierFromStorage({ clientId, storage });
           if (code && verifier) {
@@ -113,6 +112,8 @@ export default ({
               .then(() => {
                 removeCodeFromLocation();
                 removeVerifierFromStorage({ clientId, storage });
+                const returnUrl = getStateFromLocation({ location: window.location });
+                console.debug('Return url:', returnUrl);
                 if (returnUrl) {
                   console.debug('Redirecting back to requested URL');
                   window.location.replace(returnUrl);
