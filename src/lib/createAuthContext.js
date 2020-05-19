@@ -113,9 +113,10 @@ export default ({
                 removeCodeFromLocation();
                 removeVerifierFromStorage({ clientId, storage });
                 const returnUrl = getStateFromLocation({ location: window.location });
-                console.debug('Return url:', returnUrl);
+                console.log('Return url:', returnUrl);
+                debugger;
                 if (returnUrl) {
-                  console.debug('Redirecting back to requested URL');
+                  console.log('Redirecting back to requested URL');
                   window.location.replace(returnUrl);
                 }
               })
