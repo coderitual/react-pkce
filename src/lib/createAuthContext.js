@@ -126,7 +126,7 @@ export default ({
               });
           }
         }
-      }, [token]);
+      }, []);
 
       const ensureAuthenticated = (redirectUrl) => {
         const code = getCodeFromLocation({ location: window.location });
