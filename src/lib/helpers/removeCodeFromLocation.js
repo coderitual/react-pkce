@@ -8,7 +8,7 @@ export const removeCodeFromLocation = () => {
   const returnUrl = getStateFromLocation({ location: window.location });
 
   if (returnUrl) {
-    window.location.replace(returnUrl);
+    window.history.replaceState(window.history.state, null, returnUrl);
     return;
   }
 
