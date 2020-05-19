@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import authorize from './helpers/authorize';
-import { getCodeFromLocation } from './helpers/getCodeFromLocation';
+import { getCodeFromLocation, getStateFromLocation } from './helpers/getDataFromLocation';
 import { fetchToken } from './helpers/fetchToken';
 import { removeCodeFromLocation } from './helpers/removeCodeFromLocation';
 import { getVerifierFromStorage } from './helpers/getVerifierFromStorage';
@@ -93,6 +93,8 @@ export default ({
       useEffect(() => {
         if (!token && isClient) {
           const code = getCodeFromLocation({ location: window.location });
+          const returnUrl = getStateFromLocation({ location: window.location });
+
           const verifier = getVerifierFromStorage({ clientId, storage });
           if (code && verifier) {
             fetchToken({
@@ -111,6 +113,10 @@ export default ({
               .then(() => {
                 removeCodeFromLocation();
                 removeVerifierFromStorage({ clientId, storage });
+                if (redirectUrl) {
+                  console.debug('Redirecting back to requested URL');
+                  window.location.replace(redirectUrl);
+                }
               })
               .catch((e) => {
                 console.error(e);
