@@ -113,9 +113,9 @@ export default ({
               .then(() => {
                 removeCodeFromLocation();
                 removeVerifierFromStorage({ clientId, storage });
-                if (redirectUrl) {
+                if (returnUrl) {
                   console.debug('Redirecting back to requested URL');
-                  window.location.replace(redirectUrl);
+                  window.location.replace(returnUrl);
                 }
               })
               .catch((e) => {
