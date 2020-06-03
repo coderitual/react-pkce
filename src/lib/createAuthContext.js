@@ -124,7 +124,7 @@ export default ({
       const ensureAuthenticated = (redirectUrl) => {
         const code = getCodeFromLocation({ location: window.location });
         if (!token && !code) {
-          authorize({ provider, clientId, scopes, redirectUrl });
+          authorize({ provider, clientId, scopes, redirectUrl, storage });
         }
       };
 

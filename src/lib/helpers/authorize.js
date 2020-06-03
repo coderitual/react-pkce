@@ -3,13 +3,7 @@ import createCodeVerifier from './create-code-verifier';
 import hashed from './hashed';
 import getEncodedVerifierKey from './getEncodedVerifierKey';
 
-export default function authorize({
-  provider,
-  clientId,
-  scopes,
-  redirectUrl,
-  storage = sessionStorage,
-}) {
+export default function authorize({ provider, clientId, scopes, redirectUrl, storage }) {
   const encodedVerifier = base64URLEncode(createCodeVerifier());
   storage.setItem(getEncodedVerifierKey(clientId), encodedVerifier);
 
