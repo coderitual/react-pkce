@@ -17,6 +17,7 @@ export default ({
   storage = sessionStorage,
   fetch = window.fetch,
   busyIndicator = <>logging in...</>,
+  isObjectStorage = false,
 }) => {
   const context = createContext({});
   const tokenkey = `at-${clientId}`;
@@ -83,7 +84,11 @@ export default ({
         if (isClient) {
           const token = storage.getItem(tokenkey);
           if (token) {
-            setToken(JSON.parse(token));
+            if (isObjectStorage) {
+              setToken(token);
+            } else {
+              setToken(JSON.parse(token));
+            }
           }
         }
       }, []);
@@ -107,7 +112,11 @@ export default ({
               .then((val) => {
                 console.debug('We received: ', val);
                 setToken(val);
-                storage.setItem(tokenkey, JSON.stringify(val));
+                if (isObjectStorage) {
+                  storage.setItem(tokenkey, val);
+                } else {
+                  storage.setItem(tokenkey, JSON.stringify(val));
+                }
               })
               .then(() => {
                 removeCodeFromLocation();
